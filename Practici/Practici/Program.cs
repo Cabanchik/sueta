@@ -6,7 +6,7 @@ namespace Practici
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("хуй");
+            Console.WriteLine("хуй1");
         }
     }
 }
