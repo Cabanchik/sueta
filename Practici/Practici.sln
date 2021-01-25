@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Practici", "Practici\Practici.csproj", "{934C15EB-9C99-4130-BE59-23A37FC728F8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Practici", "Practici\Practici.csproj", "{934C15EB-9C99-4130-BE59-23A37FC728F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sosci", "sosci\sosci.csproj", "{B9860A6A-7CE0-4EA6-9C81-7B7DF119B468}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VTOROE", "sosci\VTOROE.csproj", "{B9860A6A-7CE0-4EA6-9C81-7B7DF119B468}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

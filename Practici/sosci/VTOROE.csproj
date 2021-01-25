@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="FootballDataSource">
+      <HintPath>..\..\..\..\..\Downloads\FootballDataSource.dll</HintPath>
+    </Reference>
+    <Reference Include="FootballModels">
+      <HintPath>..\..\..\..\..\Downloads\Telegram Desktop\FootballModels.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
