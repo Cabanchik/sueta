@@ -87,44 +87,61 @@ namespace sosci
             //        $" Матч: {item.Match} ,Голы: {item.Goals}"  );
             //}
             #endregion
-            #region(Тут четвертое)
-            //var grouppedByTeams = from t in Teams
-            //                      group t.Title by t.Id into t
+            #region (Тут третье)
+            //#3 стадион на котором было забито больше всего голов
+            //var maxGoals = (from max in Matches
+            //                select max.GuestTeamGoals + max.HomeTeamGoals).Max();
+
+            //var stadAndMaxGoals = from stad in Stadiums
+            //                      group stad by stad.Name into stadion
             //                      select new
             //                      {
-            //                          Team = t.Key
+            //                          Name = stadion.Key,
+            //                          Count = maxGoals
             //                      };
-            //var workerInTeams = from t in grouppedByTeams
-            //                    join w in Workers on t.Team equals w.TeamId
-            //                    select new
-            //                     {
-            //                         Team = t.Team,
-            //                         WorkerName = w.FirstName,
-            //                         WorkerSurname = w.LastName,
-            //                         Post = w.Position
-            //                     };
-
-            //var playersInTeams = from t in workerInTeams
-            //                     join p in Players on t.Team equals p.TeamId
-            //                     select new
-            //                     {
-            //                         Team = t.Team,
-            //                         WorkerName = t.WorkerName,
-            //                         WorkerSurname = t.WorkerSurname,
-            //                         Post = t.Post,
-            //                         PlayerName = p.FirstName,
-            //                         PlayerLastname = p.LastName
-
-            //                     };
-            //foreach (var item in playersInTeams)
+            //foreach (var item in stadAndMaxGoals)
             //{
-            //    Console.WriteLine($"Команда - {item.Team}, " +
-            //        $" Имя сотрудника - {item.WorkerName} " +
-            //        $"Фамилия сотрудника - {item.WorkerSurname} " +
-            //        $"Должность сотрудника - {item.Post} " +
-            //        $"Имя игрока - {item.PlayerName} " +
-            //        $"Фамилия игрока - {item.PlayerLastname} " );
+            //    Console.WriteLine($"{item.Name} - {item.Count}");
             //}
+            #endregion
+            #region(Тут четвертое)
+            var grouppedByTeams = from t in Teams
+                                  group t.Title by t.Id into t
+                                  select new
+                                  {
+                                      Team = t.Key
+                                  };
+            var workerInTeams = from t in grouppedByTeams
+                                join w in Workers on t.Team equals w.TeamId
+                                select new
+                                {
+                                    Team = t.Team,
+                                    WorkerName = w.FirstName,
+                                    WorkerSurname = w.LastName,
+                                    Post = w.Position
+                                };
+
+            var playersInTeams = from t in workerInTeams
+                                 join p in Players on t.Team equals p.TeamId
+                                 select new
+                                 {
+                                     Team = t.Team,
+                                     WorkerName = t.WorkerName,
+                                     WorkerSurname = t.WorkerSurname,
+                                     Post = t.Post,
+                                     PlayerName = p.FirstName,
+                                     PlayerLastname = p.LastName
+
+                                 };
+            foreach (var item in playersInTeams)
+            {
+                Console.WriteLine($"Команда - {item.Team}, " +
+                    $" Имя сотрудника - {item.WorkerName} " +
+                    $"Фамилия сотрудника - {item.WorkerSurname} " +
+                    $"Должность сотрудника - {item.Post} " +
+                    $"Имя игрока - {item.PlayerName} " +
+                    $"Фамилия игрока - {item.PlayerLastname} ");
+            }
 
 
             #endregion
@@ -220,40 +237,40 @@ namespace sosci
             //}
             #endregion
             #region(тут шестое)
-            var groupedTeams = from t in Teams
-                               group t.Title by t.Id into t
-                               select new
-                               {
-                                   Team = t.Key
-                               };
+            //var groupedTeams = from t in Teams
+            //                   group t.Title by t.Id into t
+            //                   select new
+            //                   {
+            //                       Team = t.Key
+            //                   };
             
 
-            var playersInTeams = from t in groupedTeams
-                                 join p in Players on t.Team equals p.TeamId
-                                 select new
-                                 {
-                                     Team = t.Team,
-                                     Position = p.Position,
-                                     PlayerName = p.FirstName,
-                                     PlayerSurname = p.LastName
-                                 };            
-            var teamsInPlayers = from p in playersInTeams
-                                 join t in Teams on p.Team equals t.Id
-                                 select new
-                                 {
-                                     Team = t.Title,
-                                     Position = p.Position,
-                                     PlayerName = p.PlayerName,
-                                     PlayerSurname = p.PlayerSurname,
-                                     Team2 = Teams
+            //var playersInTeams = from t in groupedTeams
+            //                     join p in Players on t.Team equals p.TeamId
+            //                     select new
+            //                     {
+            //                         Team = t.Team,
+            //                         Position = p.Position,
+            //                         PlayerName = p.FirstName,
+            //                         PlayerSurname = p.LastName
+            //                     };            
+            //var teamsInPlayers = from p in playersInTeams
+            //                     join t in Teams on p.Team equals t.Id
+            //                     select new
+            //                     {
+            //                         Team = t.Title,
+            //                         Position = p.Position,
+            //                         PlayerName = p.PlayerName,
+            //                         PlayerSurname = p.PlayerSurname,
+            //                         Team2 = Teams
 
-                                 };
-            var groupedPositions = from t in teamsInPlayers
-                                   group teamsInPlayers by t.Position into sas
-                                   select new
-                                   {
-                                       sas.Key
-                                   };
+            //                     };
+            //var groupedPositions = from t in teamsInPlayers
+            //                       group teamsInPlayers by t.Position into sas
+            //                       select new
+            //                       {
+            //                           sas.Key
+            //                       };
 
             //foreach (var pos in groupedPositions)
             //{
