@@ -7,10 +7,10 @@
 
   <ItemGroup>
     <Reference Include="FootballDataSource">
-      <HintPath>..\..\..\..\..\Downloads\FootballDataSource.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Downloads\FootballDataSource.dll</HintPath>
     </Reference>
     <Reference Include="FootballModels">
-      <HintPath>..\..\..\..\..\Downloads\Telegram Desktop\FootballModels.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\Downloads\FootballModels.dll</HintPath>
     </Reference>
   </ItemGroup>
 
