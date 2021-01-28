@@ -8,10 +8,10 @@
 
   <ItemGroup>
     <Reference Include="FootballDataSource">
-      <HintPath>..\..\..\Новая папка\FootballDataSource.dll</HintPath>
+      <HintPath>..\..\..\Prog\FootballDataSource.dll</HintPath>
     </Reference>
     <Reference Include="FootballModels">
-      <HintPath>..\..\..\Новая папка\FootballModels.dll</HintPath>
+      <HintPath>..\..\..\Prog\FootballModels.dll</HintPath>
     </Reference>
   </ItemGroup>
 
