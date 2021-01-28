@@ -89,18 +89,19 @@ namespace sosci
             #endregion
             #region (Тут третье)
             //#3 стадион на котором было забито больше всего голов
-            //var stadiumGoalsMax = (from matches in Matches
-            //                       join stadiums in Stadiums on matches.StadionId equals stadiums.Id
-            //                       group matches by stadiums.Name into allgoals
-            //                       let goal = allgoals.Sum(g => (g.GuestTeamGoals + g.HomeTeamGoals))
-            //                       orderby goal
-            //                       select new
-            //                       {
-            //                           name = allgoals.Key,
-            //                           maxGoal = goal
-            //                       }).ToList().Last();
+            var stadiumGoalsMax = (from matches in Matches
+                                   join stadiums in Stadiums on matches.StadionId equals stadiums.Id
+                                   group matches by stadiums.Name into allgoals
+                                   let goal = allgoals.Sum(g => (g.GuestTeamGoals + g.HomeTeamGoals))
+                                   orderby goal
+                                   select new
+                                   {
+                                       name = allgoals.Key,
+                                       maxGoal = goal
+                                   }).ToList().Last();
 
-            //Console.WriteLine(stadiumGoalsMax);
+            Console.WriteLine($"Максимальное количество голов: {stadiumGoalsMax}");
+           
 
             //var stadiumGoalsMax1 = Matches.Join(Stadiums, m => m.StadionId, s => s.Id, (m, s) => new { s.Name, m.GuestTeamGoals, m.HomeTeamGoals })
             //.GroupBy(m => m.Name)
@@ -381,40 +382,40 @@ namespace sosci
             //    }
             //}
 
-            var playersInTeams1 = Teams.Join(Players, t => t.Id, p => p.TeamId, (t, p) => new 
-            {
-                Team = t.Id,
-                Position = p.Position,
-                PlayerName = p.FirstName,
-                PlayerSurname = p.LastName
-            }).ToList();
-            var groppedPositions1 = Teams.Join(playersInTeams1, t => t.Id, p => p.Team, (t, p) => new
-            {
-                Team = t.Title,
-                Name = p.PlayerName,
-                Surname = p.PlayerSurname,
-                p.Position
-            }).GroupBy(p => p.Team).Select((p) => new 
-            {
-                Team = p.Key,
-                Player = p.Select(l => new 
-                {
-                    PlayerName = l.Name + " " + l.Surname, 
-                    l.Position
-                }).GroupBy(k => k.Position)
-            });
-            foreach (var item in groppedPositions1)
-            {
-                Console.WriteLine(item.Team);
-                foreach (var item2 in item.Player)
-                {
-                    Console.WriteLine("\t" + item2.Key);
-                    foreach (var item3 in item2)
-                    {
-                        Console.WriteLine("\t\t" + item3.PlayerName);
-                    }
-                }
-            }
+            //var playersInTeams1 = Teams.Join(Players, t => t.Id, p => p.TeamId, (t, p) => new 
+            //{
+            //    Team = t.Id,
+            //    Position = p.Position,
+            //    PlayerName = p.FirstName,
+            //    PlayerSurname = p.LastName
+            //}).ToList();
+            //var groppedPositions1 = Teams.Join(playersInTeams1, t => t.Id, p => p.Team, (t, p) => new
+            //{
+            //    Team = t.Title,
+            //    Name = p.PlayerName,
+            //    Surname = p.PlayerSurname,
+            //    p.Position
+            //}).GroupBy(p => p.Team).Select((p) => new 
+            //{
+            //    Team = p.Key,
+            //    Player = p.Select(l => new 
+            //    {
+            //        PlayerName = l.Name + " " + l.Surname, 
+            //        l.Position
+            //    }).GroupBy(k => k.Position)
+            //});
+            //foreach (var item in groppedPositions1)
+            //{
+            //    Console.WriteLine(item.Team);
+            //    foreach (var item2 in item.Player)
+            //    {
+            //        Console.WriteLine("\t" + item2.Key);
+            //        foreach (var item3 in item2)
+            //        {
+            //            Console.WriteLine("\t\t" + item3.PlayerName);
+            //        }
+            //    }
+            //}
             #endregion
         }
     }
