@@ -345,63 +345,75 @@ namespace sosci
 
             #endregion
             #region(тут шестое)
-            var groupedTeams = from t in Teams
-                               group t.Title by t.Id into t
-                               select new
-                               {
-                                   Team = t.Key
-                               };
 
 
-            var playersInTeams = from t in groupedTeams
-                                 join p in Players on t.Team equals p.TeamId
+
+            var playersInTeams = from t in Teams
+                                 join p in Players on t.Id equals p.TeamId
                                  select new
                                  {
-                                     Team = t.Team,
+                                     Team = t.Id,
                                      Position = p.Position,
                                      PlayerName = p.FirstName,
                                      PlayerSurname = p.LastName
                                  };
-            var teamsInPlayers = from p in playersInTeams
-                                 join t in Teams on p.Team equals t.Id
-                                 select new
-                                 {
-                                     Team = t.Title,
-                                     Position = p.Position,
-                                     PlayerName = p.PlayerName,
-                                     PlayerSurname = p.PlayerSurname,
-                                     
-
-                                 }into l 
-                                 group l.PlayerName by l.Position;
-            //var groupedPositions = from t in teamsInPlayers
-            //                       group t by t.Position into sas
-            //                       select new
-            //                       {
-            //                           Position = sas.Key,
-            //                           Players = (from p in teamsInPlayers
-            //                                      select new {
-            //                                          Team = p.Team,
-                                                      
-            //                                          PlayerName = p.PlayerName,
-            //                                          PlayerSurname = p.PlayerSurname,
-            //                                      })
-            //                       };
+            var groppedPositions = from t in Teams
+                                   join p in playersInTeams on t.Id equals p.Team
+                                   group p by t.Title into ss
+                                   select new
+                                   {
+                                       Team = ss.Key,
+                                       Player = from l in ss
+                                                select new
+                                                {
+                                                    PlayerName = l.PlayerName + " " + l.PlayerSurname,
+                                                    l.Position
+                                                } into k
+                                                group k.PlayerName by k.Position
+                                   };
 
 
-
-
-
-            foreach (var item in teamsInPlayers)
+            foreach (var item in groppedPositions)
             {
-                Console.WriteLine("\t\t" + item.Key);
-                foreach (var item2 in item)
+                Console.WriteLine(item.Team);
+                foreach (var item2 in item.Player)
                 {
-                    Console.WriteLine("\t\t\t"+item2);
+                    Console.WriteLine("\t" + item2.Key);
+                    foreach (var item3 in item2)
+                    {
+                        Console.WriteLine("\t\t" + item3);
+                    }
                 }
             }
 
-            #endregion
-        }
+            var playersInTeams2 = Teams.Join(Players, t => t.Id, p => p.TeamId, (t, p) => new
+            {
+                Team = t.Id,
+                Position = p.Position,
+                PlayerName = p.FirstName,
+                PlayerSurname = p.LastName
+            });
+
+            var teamPositionPlayers = Players.GroupBy(p => p.TeamId).Select(p => new
+            {
+                p.Key,
+                Grouping = p.ToList().GroupBy(p => p.Position)
+            }).Join().ToList();
+
+            foreach (var team in teamPositionPlayers)
+            {
+                Console.WriteLine("Команда: " + team.Key);
+                foreach (var position in team.Grouping)
+                {
+                    Console.WriteLine("\tПозиция" + position.Key);
+                    foreach (var player in position)
+                    {
+                        Console.WriteLine($"\t\t {player.FirstName} {player.LastName}");
+                    }
+                }
+                Console.WriteLine();    
+            }
+                #endregion
+            }
     }
 }
