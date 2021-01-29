@@ -11,12 +11,14 @@ namespace sosci
         static void Main(string[] args)
         {
             #region(Тут первое)
+            /////1. Количество нападающих по странам 
             //var attakersInCountry = from p in Players
             //                        where p.Position == "Forward"
             //                        group p by p.Country into k
             //                        select new
             //                        {
-            //                            Country = k.Key, Count = k.Count()
+            //                            Country = k.Key,
+            //                            Count = k.Count()
             //                        };
 
 
@@ -24,45 +26,46 @@ namespace sosci
             //{
             //    Console.WriteLine($"Country = {item.Country} , Количество футбольщиков = {item.Count}");
             //}
-            //var attackersInCountry2 = Players.Where(p => p.Position == "Forward").GroupBy(p => p.Country).Select(p => new { Country = p.Key, Count = p.Count() });
+            //var attackersInCountry2 = Players.Where(p => p.Position == "Forward").GroupBy(p => p.Country).Select(p => new { Country = p.Key, Count = p.Count() }).ToList();
 
             //foreach (var item in attackersInCountry2)
             //{
             //    Console.WriteLine($"Country = {item.Country} , Количество футбольщиков = {item.Count}");
             //}
-            #endregion
-            #region(Тут второе)
+            //#endregion
+            //#region(Тут второе)
+            /////2. Сколько было забито голов на каждом стадионе
             //var groupedGoals = from s in Stadiums
             //                   group s.Name by s.Id into s
             //                   select new
             //                   {
-            //                      Stadium = s.Key
+            //                       Stadium = s.Key
             //                   };
 
             //var goalsInStadiums = (from s in groupedGoals
-            //                      join m in Matches on s.Stadium equals m.StadionId
-            //                      select new
-            //                      {
-            //                         Stadium = s.Stadium,
-            //                         Match = m.Id,
-            //                         Goals = m.HomeTeamGoals+m.GuestTeamGoals
-
-
-            //                      }).ToList();
-            //var StadiumsWithName = (from g in goalsInStadiums
-            //                       join s in Stadiums on g.Stadium equals s.Id
+            //                       join m in Matches on s.Stadium equals m.StadionId
             //                       select new
             //                       {
-            //                           Stadium = s.Name,
-            //                           City = s.City,
-            //                           Match = g.Match,
-            //                           Goals = g.Goals
+            //                           Stadium = s.Stadium,
+            //                           Match = m.Id,
+            //                           Goals = m.HomeTeamGoals + m.GuestTeamGoals
+
+
             //                       }).ToList();
+            //var StadiumsWithName = (from g in goalsInStadiums
+            //                        join s in Stadiums on g.Stadium equals s.Id
+            //                        select new
+            //                        {
+            //                            Stadium = s.Name,
+            //                            City = s.City,
+            //                            Match = g.Match,
+            //                            Goals = g.Goals
+            //                        }).ToList();
 
             //foreach (var item in StadiumsWithName)
             //{
             //    Console.WriteLine($"Стадион:{item.Stadium}, Город: {item.City}," +
-            //        $" Матч: {item.Match} ,Голы: {item.Goals}"  );
+            //        $" Матч: {item.Match} ,Голы: {item.Goals}");
             //}
 
             //var groupedGoals2 = Stadiums.GroupBy(s => s.Id).Select(s => new { Stadium = s.Key });
@@ -72,7 +75,7 @@ namespace sosci
             //          Stadium = s.Stadium,
             //          Match = m.Id,
             //          Goals = m.HomeTeamGoals + m.GuestTeamGoals
-            //      });
+            //      }).ToList();
             //var stadiumWithName = goalsInStadiums2.Join(Stadiums, g => g.Stadium, s => s.Id, (g, s) =>
             //  new
             //  {
@@ -80,28 +83,28 @@ namespace sosci
             //      City = s.City,
             //      Match = g.Match,
             //      Goals = g.Goals
-            //  });
+            //  }).ToList();
             //foreach (var item in stadiumWithName)
             //{
-            //    Console.WriteLine($"Стадион:{item.Stadium}, Город: {item.City}," +
-            //        $" Матч: {item.Match} ,Голы: {item.Goals}"  );
+            //    Console.WriteLine($"Стадион: {item.Stadium}, Город: {item.City}," +
+            //        $" Матч: {item.Match} ,Голы: {item.Goals}");
             //}
             #endregion
             #region (Тут третье)
             //#3 стадион на котором было забито больше всего голов
-            var stadiumGoalsMax = (from matches in Matches
-                                   join stadiums in Stadiums on matches.StadionId equals stadiums.Id
-                                   group matches by stadiums.Name into allgoals
-                                   let goal = allgoals.Sum(g => (g.GuestTeamGoals + g.HomeTeamGoals))
-                                   orderby goal
-                                   select new
-                                   {
-                                       name = allgoals.Key,
-                                       maxGoal = goal
-                                   }).ToList().Last();
+            //var stadiumGoalsMax = (from matches in Matches
+            //                       join stadiums in Stadiums on matches.StadionId equals stadiums.Id
+            //                       group matches by stadiums.Name into allgoals
+            //                       let goal = allgoals.Sum(g => (g.GuestTeamGoals + g.HomeTeamGoals))
+            //                       orderby goal
+            //                       select new
+            //                       {
+            //                           name = allgoals.Key,
+            //                           maxGoal = goal
+            //                       }).ToList().Last();
 
-            Console.WriteLine($"Максимальное количество голов: {stadiumGoalsMax}");
-           
+            //Console.WriteLine($"Максимальное количество голов: {stadiumGoalsMax}");
+
 
             //var stadiumGoalsMax1 = Matches.Join(Stadiums, m => m.StadionId, s => s.Id, (m, s) => new { s.Name, m.GuestTeamGoals, m.HomeTeamGoals })
             //.GroupBy(m => m.Name)
@@ -113,6 +116,7 @@ namespace sosci
             //Console.WriteLine(stadiumGoalsMax1);
             #endregion
             #region(Тут четвертое)
+            //////4. Вывести всех людей относящихся к команде вместе с их должностями. 
 
             //var grouppedByTeams = from t in Teams
             //                      group t.Title by t.Id into t
@@ -142,24 +146,35 @@ namespace sosci
             //                         PlayerLastname = p.LastName
 
             //                     };
-            //foreach (var item in playersInTeams)
+            //var teamsAndPLayers = from p in playersInTeams
+            //                join t in Teams on p.Team equals t.Id
+            //                select new
+            //                {
+            //                    Team = t.Title,
+            //                    WorkerName = p.WorkerName,
+            //                    WorkerSurname = p.WorkerSurname,
+            //                    Post = p.Post,
+            //                    PlayerName = p.PlayerName,
+            //                    PlayerLastname = p.PlayerLastname
+            //                };
+            //foreach (var item in teamsAndPLayers)
             //{
             //    Console.WriteLine($"Команда - {item.Team}\n" +
-            //    $" Имя сотрудника - {item.WorkerName}\n " +
-            //    $"Фамилия сотрудника - {item.WorkerSurname}\n " +
-            //    $"Должность сотрудника - {item.Post}\n " +
-            //    $"Имя игрока - {item.PlayerName}\n " +
-            //    $"Фамилия игрока - {item.PlayerLastname}\n "); ;
+            //    $"Должность сотрудника - {item.Post}\n" +
+            //    $"Сотрудник - {item.WorkerName} {item.WorkerSurname}\n " +
+
+            //    $"Игрок - {item.PlayerName} {item.PlayerLastname}\n");
+              
             //}
 
-            //var grouppedByTeams1 = Teams.GroupBy(t => t.Id).Select((t) => new { Team = t.Key });
+            //var grouppedByTeams1 = Teams.GroupBy(t => t.Id).Select((t) => new { Team = t.Key }).ToList();
             //var workerInTeams1 = grouppedByTeams1.Join(Workers, t => t.Team, w => w.TeamId, (t, w) => new
             //{
             //    Team = t.Team,
             //    WorkerName = w.FirstName,
             //    WorkerSurname = w.LastName,
             //    Post = w.Position
-            //});
+            //}).ToList();
             //var playersInTeams1 = workerInTeams1.Join(Players, t => t.Team, p => p.TeamId, (t, p) => new
             //{
             //    Team = t.Team,
@@ -168,19 +183,29 @@ namespace sosci
             //    Post = t.Post,
             //    PlayerName = p.FirstName,
             //    PlayerLastname = p.LastName
-            //});
-            //foreach (var item in playersInTeams1)
+            //}).ToList();
+            //var teamsAndPLayers1 = playersInTeams1.Join(Teams, p => p.Team, t => t.Id, (p, t) => new
+            //{
+            //    Team = t.Title,
+            //    WorkerName = p.WorkerName,
+            //    WorkerSurname = p.WorkerSurname,
+            //    Post = p.Post,
+            //    PlayerName = p.PlayerName,
+            //    PlayerLastname = p.PlayerLastname
+            //}).ToList();
+            //foreach (var item in teamsAndPLayers1)
             //{
             //    Console.WriteLine($"Команда - {item.Team}\n" +
-            //    $" Имя сотрудника - {item.WorkerName}\n " +
-            //    $"Фамилия сотрудника - {item.WorkerSurname}\n " +
-            //    $"Должность сотрудника - {item.Post}\n " +
-            //    $"Имя игрока - {item.PlayerName}\n " +
-            //    $"Фамилия игрока - {item.PlayerLastname}\n ");
+            //    $"Должность сотрудника - {item.Post}\n"+
+            //    $"Сотрудник - {item.WorkerName} {item.WorkerSurname}\n" +
+
+            //    $"Игрок - {item.PlayerName} {item.PlayerLastname}\n");
+
             //}
 
             #endregion
             #region(тут пятое)
+            //////5. Судьи и их матчи, в формате группировки
 
             //var grouppedReferee = from r in Referees
             //                      group r.FirstName by r.Id into r
@@ -220,19 +245,7 @@ namespace sosci
             //                            Stadium = s.Name
 
             //                        };
-            //var homePlayersInMatches = from m in matchesInStadiums
-            //                           join t in Teams on m.HomeTeam equals t.Id
-            //                           select new
-            //                           {
-            //                               HomeTeam = t.Title,
-            //                               GuestTeam = m.GuestTeam,
-            //                               Referee = m.Referee,
-            //                               Match = m.Match,
-            //                               Matchdate = m.Matchdate,
-            //                               LIVE = m.LIVE,
-            //                               Stadium = m.Stadium,
-
-            //                           };
+            
             //var guestPlayersInMatches = from m in homePlayersInMatches
             //                            join t in Teams on m.GuestTeam equals t.Id
             //                            select new
@@ -272,16 +285,16 @@ namespace sosci
             //                      $"Закончился ли матч:{item.LIVE}\n");
             //}
 
-            //var grouppedReferee = Referees.GroupBy(r => r.Id).Select(s => new
+            //var grouppedReferee1 = Referees.GroupBy(r => r.Id).Select(s => new
             //{
             //    Referee = s.Key
-            //});
-            //var refereeInMatches = MatchesAndReferees.Join(grouppedReferee, m => m.RefereeId, r => r.Referee, (m, r) => new 
+            //}).ToList();
+            //var refereeInMatches1 = MatchesAndReferees.Join(grouppedReferee1, m => m.RefereeId, r => r.Referee, (m, r) => new
             //{
             //    Match = m.MatchId,
             //    Referee = r.Referee
-            //});
-            //var refereesAndMatches = Matches.Join(refereeInMatches, m => m.Id, r => r.Match, (m, r) => new
+            //}).ToList();
+            //var refereesAndMatches1 = Matches.Join(refereeInMatches1, m => m.Id, r => r.Match, (m, r) => new
             //{
             //    Referee = r.Referee,
             //    Match = m.Id,
@@ -290,8 +303,8 @@ namespace sosci
             //    Stadium = m.StadionId,
             //    HomeTeam = m.HomeTeamId,
             //    GuestTeam = m.GuestTeamId
-            //});
-            //var matchesInStadiums = Stadiums.Join(refereesAndMatches, s => s.Id, m => m.Stadium, (s, m) => new
+            //}).ToList();
+            //var matchesInStadiums1 = Stadiums.Join(refereesAndMatches1, s => s.Id, m => m.Stadium, (s, m) => new
             //{
             //    HomeTeam = m.HomeTeam,
             //    GuestTeam = m.GuestTeam,
@@ -300,8 +313,8 @@ namespace sosci
             //    Matchdate = m.Matchdate,
             //    LIVE = m.LIVE,
             //    Stadium = s.Name
-            //});
-            //var homePlayersInMatch = Teams.Join(matchesInStadiums, t => t.Id, m => m.HomeTeam, (t, m) => new
+            //}).ToList();
+            //var homePlayersInMatch1 = Teams.Join(matchesInStadiums1, t => t.Id, m => m.HomeTeam, (t, m) => new
             //{
             //    HomeTeam = t.Title,
             //    GuestTeam = m.GuestTeam,
@@ -310,8 +323,8 @@ namespace sosci
             //    Matchdate = m.Matchdate,
             //    LIVE = m.LIVE,
             //    Stadium = m.Stadium,
-            //});
-            //var guestTeamInMatch = Teams.Join(homePlayersInMatch, t => t.Id, m => m.GuestTeam, (t, m) => new
+            //}).ToList();
+            //var guestTeamInMatch1 = Teams.Join(homePlayersInMatch1, t => t.Id, m => m.GuestTeam, (t, m) => new
             //{
             //    HomeTeam = m.HomeTeam,
             //    GuestTeam = t.Title,
@@ -320,8 +333,8 @@ namespace sosci
             //    Matchdate = m.Matchdate,
             //    LIVE = m.LIVE,
             //    Stadium = m.Stadium,
-            //});
-            //var refereesInMatch = Referees.Join(guestTeamInMatch, r => r.Id, m => m.Referee, (r, m) => new
+            //}).ToList();
+            //var refereesInMatch1 = Referees.Join(guestTeamInMatch1, r => r.Id, m => m.Referee, (r, m) => new
             //{
             //    HomeTeam = m.HomeTeam,
             //    GuestTeam = m.GuestTeam,
@@ -331,8 +344,8 @@ namespace sosci
             //    Matchdate = m.Matchdate,
             //    LIVE = m.LIVE,
             //    Stadium = m.Stadium,
-            //});
-            //foreach (var item in refereesInMatch)
+            //}).ToList();
+            //foreach (var item in refereesInMatch1)
             //{
             //    Console.WriteLine(
             //                      $"Судья: {item.RefereeName} {item.RefereeLastName}\n" +
@@ -346,64 +359,65 @@ namespace sosci
 
             #endregion
             #region(тут шестое)
-            //var playersInTeams = from t in Teams
-            //                     join p in Players on t.Id equals p.TeamId
-            //                     select new
-            //                     {
-            //                         Team = t.Id,
-            //                         Position = p.Position,
-            //                         PlayerName = p.FirstName,
-            //                         PlayerSurname = p.LastName
-            //                     };
-            //var groppedPositions = from t in Teams
-            //                       join p in playersInTeams on t.Id equals p.Team
-            //                       group p by t.Title into ss
-            //                       select new
-            //                       {
-            //                           Team = ss.Key,
-            //                           Player = from l in ss
-            //                                    select new
-            //                                    {
-            //                                        PlayerName = l.PlayerName + " " + l.PlayerSurname,
-            //                                        l.Position
-            //                                    } into k
-            //                                    group k.PlayerName by k.Position
-            //                       };
-            //foreach (var item in groppedPositions)
-            //{
-            //    Console.WriteLine(item.Team);
-            //    foreach (var item2 in item.Player)
-            //    {
-            //        Console.WriteLine("\t" + item2.Key);
-            //        foreach (var item3 in item2)
-            //        {
-            //            Console.WriteLine("\t\t" + item3);
-            //        }
-            //    }
-            //}
+            // //6.Сгруппировать игроков по командам и их позициям позициям
+            //var playersInTeams2 = from t in Teams
+            //                      join p in Players on t.Id equals p.TeamId
+            //                      select new
+            //                      {
+            //                          Team = t.Id,
+            //                          Position = p.Position,
+            //                          PlayerName = p.FirstName,
+            //                          PlayerSurname = p.LastName
+            //                      };
+            // var groppedPositions = from t in Teams
+            //                        join p in playersInTeams2 on t.Id equals p.Team
+            //                        group p by t.Title into ss
+            //                        select new
+            //                        {
+            //                            Team = ss.Key,
+            //                            Player = from l in ss
+            //                                     select new
+            //                                     {
+            //                                         PlayerName = l.PlayerName + " " + l.PlayerSurname,
+            //                                         l.Position
+            //                                     } into k
+            //                                     group k.PlayerName by k.Position
+            //                        };
+            // foreach (var item in groppedPositions)
+            // {
+            //     Console.WriteLine(item.Team);
+            //     foreach (var item2 in item.Player)
+            //     {
+            //         Console.WriteLine("\t" + item2.Key);
+            //         foreach (var item3 in item2)
+            //         {
+            //             Console.WriteLine("\t\t" + item3);
+            //         }
+            //     }
+            // }
 
-            //var playersInTeams1 = Teams.Join(Players, t => t.Id, p => p.TeamId, (t, p) => new 
+            //var playersInTeams3 = Teams.Join(Players, t => t.Id, p => p.TeamId, (t, p) => new
             //{
             //    Team = t.Id,
             //    Position = p.Position,
             //    PlayerName = p.FirstName,
             //    PlayerSurname = p.LastName
             //}).ToList();
-            //var groppedPositions1 = Teams.Join(playersInTeams1, t => t.Id, p => p.Team, (t, p) => new
+            //var groppedPositions1 = Teams.Join(playersInTeams3, t => t.Id, p => p.Team, (t, p) => new
             //{
             //    Team = t.Title,
             //    Name = p.PlayerName,
             //    Surname = p.PlayerSurname,
             //    p.Position
-            //}).GroupBy(p => p.Team).Select((p) => new 
+            //}).GroupBy(p => p.Team).Select((p) => new
             //{
             //    Team = p.Key,
-            //    Player = p.Select(l => new 
+            //    Player = p.Select(l => new
             //    {
-            //        PlayerName = l.Name + " " + l.Surname, 
+            //        PlayerName = l.Name + " " + l.Surname,
             //        l.Position
             //    }).GroupBy(k => k.Position)
-            //});
+            //}).ToList();
             //foreach (var item in groppedPositions1)
             //{
             //    Console.WriteLine(item.Team);
