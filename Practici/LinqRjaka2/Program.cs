@@ -216,7 +216,7 @@ namespace LinqRjaka2
             }
 
             #endregion
-            //#region(тут шестое)
+            #region(тут шестое)
             ////6.Сгруппировать игроков по командам и их позициям позициям
             //var playersInTeams2 = from t in Teams
             //                      join p in Players on t.Id equals p.TeamId
@@ -288,7 +288,7 @@ namespace LinqRjaka2
             //        }
             //    }
             //}
-            //#endregion
+            #endregion
         }
     }
 }
