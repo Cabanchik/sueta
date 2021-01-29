@@ -7,10 +7,10 @@
 
   <ItemGroup>
     <Reference Include="FootballDataSource">
-      <HintPath>..\..\..\FootballDataSource.dll</HintPath>
+      <HintPath>..\..\..\Prog\FootballDataSource.dll</HintPath>
     </Reference>
     <Reference Include="FootballModels">
-      <HintPath>..\..\..\FootballModels.dll</HintPath>
+      <HintPath>..\..\..\Prog\FootballModels.dll</HintPath>
     </Reference>
   </ItemGroup>
 
