@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,10 +7,10 @@
 
   <ItemGroup>
     <Reference Include="FootballDataSource">
-      <HintPath>..\..\..\..\..\..\Downloads\FootballDataSource.dll</HintPath>
+      <HintPath>..\..\..\FootballDataSource.dll</HintPath>
     </Reference>
     <Reference Include="FootballModels">
-      <HintPath>..\..\..\..\..\..\Downloads\FootballModels.dll</HintPath>
+      <HintPath>..\..\..\FootballModels.dll</HintPath>
     </Reference>
   </ItemGroup>
 

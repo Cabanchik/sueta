@@ -141,12 +141,12 @@ namespace LinqRjaka2
                                       player.FirstName,
                                       player.LastName,
                                       player.Position
-                                  } into grupped
-                                  group grupped by grupped.TeamId into result
+                                  } into playerInTeams
+                                  group playerInTeams by playerInTeams.TeamId into grouppedPlayers
                                   select new
                                   {
-                                      Team = result.ToList()[0].Team,
-                                      Players = (from p in result
+                                      Team = grouppedPlayers.ToList()[0].Team,
+                                      Players = (from p in grouppedPlayers
                                                  select new
                                                  {
                                                      p.FirstName,
@@ -165,21 +165,21 @@ namespace LinqRjaka2
 
             var NewPlayers = (Players
                 .Select(p => new
-            {
-                p.FirstName,
-                p.LastName,
-                Position = "Игрок - " + p.Position,
-                p.TeamId
-            })).ToList();
+                {
+                    p.FirstName,
+                    p.LastName,
+                    Position = "Игрок - " + p.Position,
+                    p.TeamId
+                })).ToList();
 
             var NewWorkers = (Workers
                 .Select(w => new
-            {
-                w.FirstName,
-                w.LastName,
-                Position = "Работник - " + w.Position,
-                w.TeamId
-            }).Union(NewPlayers)).ToList();
+                {
+                    w.FirstName,
+                    w.LastName,
+                    Position = "Работник - " + w.Position,
+                    w.TeamId
+                }).Union(NewPlayers)).ToList();
 
 
 
@@ -193,16 +193,16 @@ namespace LinqRjaka2
                 allteam.LastName,
                 allteam.Position
             })
-            .GroupBy(grupped => grupped.TeamId)
-            .Select(result => new
+            .GroupBy(grouppedPlayers => grouppedPlayers.TeamId)
+            .Select(grouppedPlayers => new
             {
-                Key = result.ToList()[0].Team,
-                PlayersWorkers = (from p in result
+                Key = grouppedPlayers.ToList()[0].Team,
+                PlayersWorkers = (from players in grouppedPlayers
                                   select new
                                   {
-                                      p.FirstName,
-                                      p.LastName,
-                                      p.Position
+                                      players.FirstName,
+                                      players.LastName,
+                                      players.Position
                                   }).ToList()
             })).ToList();
 
@@ -261,46 +261,46 @@ namespace LinqRjaka2
             }
             var matches2 = Matches
                 .Join(Teams, m => m.GuestTeamId, t => t.Id, (m, t) => new
-            {
-                m.Id,
-                GuestTeam = t.Title,
-                m.HomeTeamId,
-                m.IsFinished,
-                m.MatchDate,
-                m.StadionId
-            }).Join(Teams, m => m.HomeTeamId, t => t.Id, (m, t) => new
-            {
-                m.Id,
-                m.GuestTeam,
-                HomeTeam = t.Id,
-                m.IsFinished,
-                m.MatchDate,
-                m.StadionId
-            }).Join(Stadiums, m => m.StadionId, s => s.Id, (m, s) => new
-            {
-                m.Id,
-                m.GuestTeam,
-                m.HomeTeam,
-                m.IsFinished,
-                m.MatchDate,
-                Stadium = s.Name
-            });
+                {
+                    m.Id,
+                    GuestTeam = t.Title,
+                    m.HomeTeamId,
+                    m.IsFinished,
+                    m.MatchDate,
+                    m.StadionId
+                }).Join(Teams, m => m.HomeTeamId, t => t.Id, (m, t) => new
+                {
+                    m.Id,
+                    m.GuestTeam,
+                    HomeTeam = t.Id,
+                    m.IsFinished,
+                    m.MatchDate,
+                    m.StadionId
+                }).Join(Stadiums, m => m.StadionId, s => s.Id, (m, s) => new
+                {
+                    m.Id,
+                    m.GuestTeam,
+                    m.HomeTeam,
+                    m.IsFinished,
+                    m.MatchDate,
+                    Stadium = s.Name
+                });
             var referee2 = Referees
                 .Join(MatchesAndReferees, r => r.Id, m => m.RefereeId, (r, m) => new
-            {
-                Referee = r.FirstName + " " + r.LastName,
-                m.MatchId
-            }).Join(matches2, r => r.MatchId, m => m.Id, (r, m) => new
-            {
-                Referee = r.Referee,
-                ID = m.Id,
-                LIVE = m.IsFinished,
-                Date = m.MatchDate,
-                Stadium = m.Stadium,
-                HomeTeam = m.HomeTeam,
-                GuestTeam = m.GuestTeam
+                {
+                    Referee = r.FirstName + " " + r.LastName,
+                    m.MatchId
+                }).Join(matches2, r => r.MatchId, m => m.Id, (r, m) => new
+                {
+                    Referee = r.Referee,
+                    ID = m.Id,
+                    LIVE = m.IsFinished,
+                    Date = m.MatchDate,
+                    Stadium = m.Stadium,
+                    HomeTeam = m.HomeTeam,
+                    GuestTeam = m.GuestTeam
 
-            }).GroupBy(m => m.Referee);
+                }).GroupBy(m => m.Referee);
 
             foreach (var item in referee2)
             {
@@ -313,6 +313,7 @@ namespace LinqRjaka2
                         $"Домашиняя команда: {match.HomeTeam}\n" +
                         $"Гостевая команда: {match.GuestTeam}\n");
                 }
+
             }
 
             #endregion
@@ -320,18 +321,18 @@ namespace LinqRjaka2
             Console.WriteLine("\n6.Сгруппировать игроков по командам и их позициям позициям\n");
             var playerByTeamsAndPos = (from player in Players
                                        join team in Teams on player.TeamId equals team.Id
-                                       group player by team.Title into p
+                                       group player by team.Title into playerByTitle
                                        select new
                                        {
-                                           TeamTitle = p.Key,
-                                           Player = (from player in p
+                                           TeamTitle = playerByTitle.Key,
+                                           Player = (from player in playerByTitle
                                                      select new
                                                      {
                                                          PlayerName = player.LastName + " " + player.FirstName,
                                                          Position = player.Position
                                                      }
-                                                    into pl
-                                                     group pl.PlayerName by pl.Position)
+                                                     into playerByTeamTitle
+                                                     group playerByTeamTitle.PlayerName by playerByTeamTitle.Position)
                                        }).ToList();
 
             foreach (var team in playerByTeamsAndPos)
@@ -349,14 +350,15 @@ namespace LinqRjaka2
 
             var teamPositionPlayers = Players
                 .Join(Teams, p => p.TeamId, t => t.Id, (p, t) => new
+                {
+                    Team = t.Title,
+                    PlayerAndTeam = p
+                })
+                .GroupBy(playerItTeams => playerItTeams.Team)
+                .Select(playerItTeams => new
             {
-                Team = t.Title,
-                Player = p
-            }).GroupBy(p => p.Team)
-            .Select(p => new
-            {
-                p.Key,
-                Grouping = p.ToList().GroupBy(p => p.Player.Position)
+                playerItTeams.Key,
+                Grouping = playerItTeams.ToList().GroupBy(playerItTeams => playerItTeams.PlayerAndTeam.Position)
             }).ToList();
             foreach (var team in teamPositionPlayers)
             {
@@ -366,7 +368,7 @@ namespace LinqRjaka2
                     Console.WriteLine("\tПозиция: " + position.Key);
                     foreach (var player in position)
                     {
-                        Console.WriteLine($"\t\t {player.Player.FirstName} {player.Player.LastName}");
+                        Console.WriteLine($"\t\t {player.PlayerAndTeam.FirstName} {player.PlayerAndTeam.LastName}");
                     }
                 }
                 Console.WriteLine();
